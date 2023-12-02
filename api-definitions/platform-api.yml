@@ -1,0 +1,92 @@
+openapi: 3.0.3
+info:
+  title: Hospital API v1
+  description: |-
+    API for the hospital
+  termsOfService: http://swagger.io/terms/
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+tags:
+  - name: Platform
+paths:
+  /api/v1/reservation/{day}:
+    get:
+      tags:
+        - Platform
+      description: Get an overview of all reservations for a single day
+      parameters:
+        - in: path
+          name: day
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: useCqrs
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiReservationOverview'
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+components:
+  schemas:
+    ApiReservationOverview:
+      type: object
+      properties:
+        day:
+          type: string
+          format: date
+        reservations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiReservation'
+    ApiReservation:
+      type: object
+      properties:
+        user:
+          type: object
+          properties:
+            id:
+              type: integer
+            firstName:
+              type: string
+            lastName:
+              type: string
+            email:
+              type: string
+        owner:
+          type: object
+          properties:
+            id:
+              type: integer
+            firstName:
+              type: string
+            lastName:
+              type: string
+            email:
+              type: integer
+            address:
+              type: string
+        carId:
+          type: integer
+    ApiError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: 'Functional code specifying the error'
+          example: '2300'
+        message:
+          type: string
+          description: 'Brief explanation about the error, for more information consult the Doctor Service team'

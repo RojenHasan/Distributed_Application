@@ -1,0 +1,164 @@
+openapi: 3.0.3
+info:
+  title: Owner Service v1
+  description: |-
+    API for Owner Service
+  termsOfService: http://swagger.io/terms/
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+tags:
+  - name: Owner
+    description: Cars owner
+paths:
+  /api/v1/owner:
+    post:
+      tags:
+        - Owner
+      description: Create a new Owner
+      operationId: createOwner
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiOwner'
+      responses:
+        '200':
+          description: Successful operation
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    get:
+      tags:
+        - Owner
+      summary: Get all Owners
+      description: Get all Owners
+      operationId: getOwners
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiOwners'
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+
+  /api/v1/owner/{ownerId}:
+    get:
+      tags:
+        - Owner
+      summary: Get a Owner by ownerId
+      description: Get a Owner by ownerId
+      operationId: Get Owner by ownerId
+      parameters:
+        - in: path
+          name: ownerId
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiOwner'
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+
+components:
+  schemas:
+    ApiOwners:
+      type: array
+      items:
+        $ref: '#/components/schemas/ApiOwner'
+    ApiOwner:
+      type: object
+      properties:
+        ownerId:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        address:
+          type: string
+        carType:
+          type: string
+    OwnerCreatedEvent:
+      type: object
+      properties:
+        owner:
+          $ref: '#/components/schemas/ApiOwner'
+    ApiError:
+      type: object
+      properties:
+        code:
+          type: string
+          description: 'Functional code specifying the error'
+          example: '2300'
+        message:
+          type: string
+          description: 'Brief explanation about the error'
+
+    AddOwnerRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        address:
+          type: string
+        carType:
+          type: string
+
+    ValidateOwnerCommand:
+      type: object
+      properties:
+        reservationId:
+          type: integer
+        ownerId:
+          type: integer
+    OwnerValidatedEvent:
+      type: object
+      properties:
+        reservationId:
+          type: integer
+        ownerId:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        address:
+          type: string
+        carType:
+          type: string
+    CheckOwnerIsClientCommand:
+      type: object
+      properties:
+        reservationId:
+          type: integer
+        carType:
+          type: string
