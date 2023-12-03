@@ -14,13 +14,10 @@ public class Reservation {
     private String userEmail;
     private LocalDate preferredDay;
     private int carId;
-    private String neededCarType;
     private String email;
     private BigDecimal totalCost;
-    //private String billingStatus;
     private int totalDays;
 
-    //private Integer billId;
 
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
@@ -56,6 +53,9 @@ public class Reservation {
         return userEmail;
     }
 
+    public void setTotalDays(int totalDays) {
+        this.totalDays = totalDays;
+    }
 
     public Integer getCarId() {
         return carId;
@@ -71,10 +71,6 @@ public class Reservation {
 
     public LocalDate getPreferredDay() {
         return preferredDay;
-    }
-
-    public String getNeededCarType() {
-        return neededCarType;
     }
 
     public int getTotalDays() {
@@ -98,7 +94,7 @@ public class Reservation {
     public void carAvailable(Integer id, String email, BigDecimal price) {
         this.carId = id;
         this.email = email;
-        this.totalCost = price;
+        this.totalCost = price.multiply(BigDecimal.valueOf(this.totalDays));
         this.status = ReservationStatus.REQUEST_REGISTERED;
     }
 
@@ -111,7 +107,7 @@ public class Reservation {
     }
     public void accept() {
         this.status = ReservationStatus.ACCEPTED;
-        calculateTotalCost();
+       // calculateTotalCost();
     }
 
     private void calculateTotalCost() {

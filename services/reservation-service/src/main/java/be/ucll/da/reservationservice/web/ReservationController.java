@@ -2,13 +2,16 @@ package be.ucll.da.reservationservice.web;
 
 
 import be.ucll.da.reservationservice.api.ReservationApiDelegate;
-import be.ucll.da.reservationservice.api.model.*;
 import be.ucll.da.reservationservice.domain.reservation.Reservation;
 import be.ucll.da.reservationservice.domain.reservation.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-
+import be.ucll.da.reservationservice.api.model.ApiReservationRequestResponse;
+import be.ucll.da.reservationservice.api.model.ApiReservationRequest;
+import be.ucll.da.reservationservice.api.model.ApiReservationConfirmation;
+import be.ucll.da.reservationservice.api.model.ApiReservationOverview;
+import be.ucll.da.reservationservice.api.model.ApiReservation;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 

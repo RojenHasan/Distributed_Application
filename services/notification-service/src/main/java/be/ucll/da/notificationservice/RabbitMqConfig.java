@@ -1,6 +1,6 @@
 package be.ucll.da.notificationservice;
 
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.rabbit.config.RetryInterceptorBuilder;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -18,7 +18,6 @@ public class RabbitMqConfig {
     public Jackson2JsonMessageConverter converter() {
         return new Jackson2JsonMessageConverter();
     }
-
     @Bean
     public RetryOperationsInterceptor retryInterceptor(){
         return RetryInterceptorBuilder.stateless().maxAttempts(3)

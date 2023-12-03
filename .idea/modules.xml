@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Distributed_Application.iml" filepath="$PROJECT_DIR$/.idea/Distributed_Application.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/api-gateway/api-gateway.iml" filepath="$PROJECT_DIR$/services/api-gateway/api-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/car-service/car-service.iml" filepath="$PROJECT_DIR$/services/car-service/car-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/notification-service/notification-service.iml" filepath="$PROJECT_DIR$/services/notification-service/notification-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/owner-service/owner-service.iml" filepath="$PROJECT_DIR$/services/owner-service/owner-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/reservation-service/reservation-service.iml" filepath="$PROJECT_DIR$/services/reservation-service/reservation-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/services/user-service/user-service.iml" filepath="$PROJECT_DIR$/services/user-service/user-service.iml" />
+    </modules>
+  </component>
+</project>

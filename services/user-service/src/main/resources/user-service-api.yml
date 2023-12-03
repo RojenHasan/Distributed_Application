@@ -111,6 +111,7 @@ components:
         user:
           $ref: '#/components/schemas/ApiUser'
     ApiUsers:
+      type: object
       properties:
         users:
           type: array

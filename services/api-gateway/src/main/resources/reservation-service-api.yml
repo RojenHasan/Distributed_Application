@@ -83,6 +83,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiError'
+  /api/v1/reservation/{reservationId}/bill:
+    get:
+      tags:
+        - Reservation
+      description: Get the billing details for a reservation
+      parameters:
+        - in: path
+          name: reservationId
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiReservation'
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
 components:
   schemas:
     ApiReservationOverview:
@@ -98,36 +122,47 @@ components:
     ApiReservation:
       type: object
       properties:
+        id:
+          type: integer
         userId:
           type: integer
-        ownerId:
-          type: integer
+        email:
+          type: string
         carId:
           type: integer
+        carType:
+          type: string
+        totalCost:
+          type: number
+        totalDays:
+          type: integer
+        ownerEmail:
+          type: string
     ApiReservationRequest:
       type: object
       properties:
         userId:
           type: integer
-        neededCarType:
-          type: string
-          example: 'Gastrology'
+        carId:
+          type: integer
         preferredDay:
           type: string
           format: date
           example: '2023-09-21'
+        totalDays:
+          type: integer
     ApiReservationRequestResponse:
       type: object
       properties:
         reservationRequestNumber:
           type: string
-          example: "23-11-5678"
+          example: "1"
     ApiReservationConfirmation:
       type: object
       properties:
         reservationRequestNumber:
           type: string
-          example: "23-11-5678"
+          example: "1"
         acceptProposedReservation:
           type: boolean
     ApiError:

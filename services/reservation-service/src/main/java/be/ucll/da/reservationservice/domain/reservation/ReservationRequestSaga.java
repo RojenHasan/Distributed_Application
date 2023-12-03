@@ -1,13 +1,16 @@
 package be.ucll.da.reservationservice.domain.reservation;
 
 
+import be.ucll.da.reservationservice.api.model.ApiReservation;
 import be.ucll.da.reservationservice.client.car.api.model.CarReservedEvent;
 import be.ucll.da.reservationservice.client.car.api.model.CarValidatedEvent;
 import be.ucll.da.reservationservice.client.user.api.model.UserValidatedEvent;
 import be.ucll.da.reservationservice.messaging.RabbitMqMessageSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import be.ucll.da.reservationservice.api.model.ApiReservation;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Component
@@ -41,8 +44,9 @@ public class ReservationRequestSaga {
         Reservation reservation = getReservationById(id);
         if (event.getIsAvailable()) {
             reservation.carAvailable(event.getCarId(), event.getOwnerEmail(), event.getPrice());
+            BigDecimal totalPrice = reservation.getTotalCost();
             eventSender.sendEmail(reservation.getEmail(), generateMessage(reservation.getId(), "Proposal for reservation registered. Please accept or decline."));
-            eventSender.sendEmail(reservation.getUserEmail(), generateMessage(reservation.getId(), "Your factuur is: " + event.getPrice()));
+            eventSender.sendEmail(reservation.getUserEmail(), generateMessage(reservation.getId(), "Your factuur is: " + totalPrice));
 
         } else {
             reservation.noCarAvailable();

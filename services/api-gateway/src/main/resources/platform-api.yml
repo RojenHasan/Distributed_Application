@@ -11,75 +11,333 @@ externalDocs:
 tags:
   - name: Platform
 paths:
-  /api/v1/reservation/{day}:
+  /api/v1/users:
     get:
       tags:
         - Platform
-      description: Get an overview of all reservations for a single day
-      parameters:
-        - in: path
-          name: day
-          schema:
-            type: string
-          required: true
-        - in: query
-          name: useCqrs
-          schema:
-            type: boolean
+      summary: Get all users
+      description: Get a list of all users
+      operationId: GetAllUsers
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiReservationOverview'
+                $ref: '#/components/schemas/ApiUsers'
         '500':
           description: Internal Error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiError'
+    post:
+      tags:
+        - Platform
+      description: Create a new User
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiUser'
+      responses:
+        '201':
+          description: User successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiUser'
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+
+  /api/v1/owner:
+    post:
+      tags:
+        - Platform
+      description: Create a new Owner
+      operationId: createOwner
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiOwner'
+      responses:
+        '200':
+          description: Successful operation
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    get:
+      tags:
+        - Platform
+      summary: Get all Owners
+      description: Get all Owners
+      operationId: getOwners
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiOwners'
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+
+  /api/v1/car:
+    post:
+      tags:
+        - Platform
+      description: Create a new Car
+      operationId: createCar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiCar'
+      responses:
+        '200':
+          description: Successful operation
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    get:
+      tags:
+        - Platform
+      summary: Get all Cars
+      description: Get all Cars
+      operationId: getCars
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiCars'
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/v1/car/{carId}:
+    delete:
+      tags:
+        - Platform
+      summary: Remove a Car
+      description: Remove a Car by carId
+      operationId: removeCar
+      parameters:
+        - in: path
+          name: carId
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Successful operation
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+
+  /api/v1/car/search:
+    get:
+      tags:
+        - Platform
+      summary: Search for Cars
+      description: Search for cars based on location, type, and price
+      operationId: searchCars
+      parameters:
+        - in: query
+          name: location
+          schema:
+            type: string
+          description: The location to search for
+        - in: query
+          name: carType
+          schema:
+            type: string
+          description: The type of car to search for
+        - in: query
+          name: maxPrice
+          schema:
+            type: number
+          description: The maximum price to filter by
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiCars'
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+
+  /api/v1/reservation-request:
+    post:
+      tags:
+        - Platform
+      description: Register a new reservation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiReservationRequest'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiReservationRequestResponse'
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+  /api/v1/reservation-confirmation:
+    post:
+      tags:
+        - Reservation
+      description: Confirm or Decline a previously requested reservation
+      summary: Submit reservation confirmation
+      operationId: apiV1ReservationConfirmationPost
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiReservationConfirmation'
+      responses:
+        '200':
+          description: Successful operation
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+
 components:
   schemas:
-    ApiReservationOverview:
+    ApiUser:
+      properties:
+        userId:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        isClient:
+          type: boolean
+    ApiUsers:
       type: object
       properties:
-        day:
-          type: string
-          format: date
-        reservations:
+        users:
           type: array
           items:
-            $ref: '#/components/schemas/ApiReservation'
-    ApiReservation:
+            $ref: '#/components/schemas/ApiUser'
+    ApiOwners:
       type: object
       properties:
-        user:
-          type: object
-          properties:
-            id:
-              type: integer
-            firstName:
-              type: string
-            lastName:
-              type: string
-            email:
-              type: string
-        owner:
-          type: object
-          properties:
-            id:
-              type: integer
-            firstName:
-              type: string
-            lastName:
-              type: string
-            email:
-              type: integer
-            address:
-              type: string
+        owners:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiOwner'
+    ApiOwner:
+      type: object
+      properties:
+        ownerId:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        address:
+          type: string
+        carType:
+          type: string
+    ApiCars:
+      type: object
+      properties:
+        cars:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiCar'
+    ApiCar:
+      type: object
+      properties:
         carId:
           type: integer
+        ownerId:
+          type: integer
+        location:
+          type: string
+        price:
+          type: number
+        carType:
+          type: string
+        isAvailable:
+          type: boolean
+
+    ApiReservationRequest:
+      type: object
+      properties:
+        userId:
+          type: integer
+        carId:
+          type: integer
+        preferredDay:
+          type: string
+          format: date
+          example: '2023-09-21'
+        totalDays:
+          type: integer
+    ApiReservationRequestResponse:
+      type: object
+      properties:
+        reservationRequestNumber:
+          type: string
+          example: "1"
+    ApiReservationConfirmation:
+      type: object
+      properties:
+        reservationRequestNumber:
+          type: string
+          example: "1"
+        acceptProposedReservation:
+          type: boolean
+
     ApiError:
       type: object
       properties:

@@ -156,13 +156,13 @@ components:
       properties:
         reservationRequestNumber:
           type: string
-          example: "23-11-5678"
+          example: "1"
     ApiReservationConfirmation:
       type: object
       properties:
         reservationRequestNumber:
           type: string
-          example: "23-11-5678"
+          example: "1"
         acceptProposedReservation:
           type: boolean
     ApiError:

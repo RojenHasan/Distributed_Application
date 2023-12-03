@@ -29,7 +29,7 @@ public class CarController implements CarApiDelegate {
     @Override
     public ResponseEntity<ApiCars> getCars() {
         ApiCars cars = new ApiCars();
-        cars.addAll(
+        cars.setCars(
                 carService.getAllCars().stream()
                         .map(this::toDto)
                         .toList()
@@ -47,7 +47,7 @@ public class CarController implements CarApiDelegate {
     @Override
     public ResponseEntity<ApiCars> searchCars(String location, String carType, BigDecimal maxPrice) {
         ApiCars cars = new ApiCars();
-        cars.addAll(
+        cars.setCars(
                 carService.searchCars(location, carType, maxPrice).stream()
                         .map(this::toDto)
                         .toList()
@@ -61,6 +61,7 @@ public class CarController implements CarApiDelegate {
                 .ownerId(car.getOwnerId())
                 .carType(car.getCarType())
                 .location(car.getLocation())
-                .price(car.getPrice());
+                .price(car.getPrice())
+                .isAvailable(car.isAvailable());
     }
 }

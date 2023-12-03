@@ -22,9 +22,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ApiUser'
+                $ref: '#/components/schemas/ApiUsers'
         '500':
           description: Internal Error
           content:
@@ -113,9 +111,12 @@ components:
         user:
           $ref: '#/components/schemas/ApiUser'
     ApiUsers:
-      type: array
-      items:
-        $ref: '#/components/schemas/ApiUser'
+      type: object
+      properties:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiUser'
     ApiError:
       type: object
       properties:

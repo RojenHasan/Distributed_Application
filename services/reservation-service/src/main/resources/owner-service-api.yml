@@ -83,9 +83,12 @@ paths:
 components:
   schemas:
     ApiOwners:
-      type: array
-      items:
-        $ref: '#/components/schemas/ApiOwner'
+      type: object
+      properties:
+        owners:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiOwner'
     ApiOwner:
       type: object
       properties:

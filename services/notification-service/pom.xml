@@ -37,8 +37,18 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
 
 		<dependency>
@@ -47,8 +57,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-amqp</artifactId>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
@@ -98,7 +109,7 @@
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<inputSpec>${project.basedir}/src/main/resources/owner-service.yml</inputSpec>
+							<inputSpec>${project.basedir}/src/main/resources/notification-service-api.yml</inputSpec>
 							<generatorName>java</generatorName>
 							<library>resttemplate</library>
 							<generateApis>true</generateApis>
@@ -110,7 +121,7 @@
 							<skipValidateSpec>true</skipValidateSpec>
 							<generateSupportingFiles>false</generateSupportingFiles>
 							<generateApis>false</generateApis>
-							<modelPackage>be.ucll.da.notificationservice.client.owner.api.model</modelPackage>
+							<modelPackage>be.ucll.da.notificationservice.api.messaging.model</modelPackage>
 
 							<configOptions>
 								<dateLibrary>java8</dateLibrary>

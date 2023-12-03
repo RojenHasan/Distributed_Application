@@ -63,7 +63,7 @@ public class OwnerController implements OwnerApiDelegate {
    @Override
    public ResponseEntity<ApiOwners> getOwners() {
        ApiOwners owners = new ApiOwners();
-       owners.addAll(
+       owners.setOwners(
                ownerService.getAllOwners().stream()
                        .map(this::toDto)
                        .toList()
@@ -74,7 +74,7 @@ public class OwnerController implements OwnerApiDelegate {
 
     public ResponseEntity<ApiOwners> getOwners(String carType) {
         ApiOwners owners = new ApiOwners();
-        owners.addAll(
+        owners.setOwners(
                 ownerService.getOwners(carType).stream()
                         .map(this::toDto)
                         .toList()
@@ -108,7 +108,7 @@ public class OwnerController implements OwnerApiDelegate {
                 .collect(Collectors.toList());
 
         ApiOwners apiOwnersResponse = new ApiOwners();
-        apiOwnersResponse.addAll(apiOwners);
+        apiOwnersResponse.setOwners(apiOwners);
 
         return ResponseEntity.ok(apiOwnersResponse);
     }

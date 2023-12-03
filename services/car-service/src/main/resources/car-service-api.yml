@@ -116,9 +116,12 @@ paths:
 components:
   schemas:
     ApiCars:
-      type: array
-      items:
-        $ref: '#/components/schemas/ApiCar'
+      type: object
+      properties:
+        cars:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiCar'
     ApiCar:
       type: object
       properties:
